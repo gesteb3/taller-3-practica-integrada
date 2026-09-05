@@ -19,10 +19,7 @@ function aplicarDescuento(total, porcentaje) {
         throw new Error('El descuento debe estar entre 0 y 100');
     }
 
-    return total - (total * porcentaje / 100);
+    return total - total * (porcentaje / 100);
 }
 
-module.exports = {
-    calcularTotal,
-    aplicarDescuento
-};
+module.exports = { calcularTotal, aplicarDescuento };
