@@ -1,0 +1,11 @@
+TECHSTORE GT - NOTAS DEL PROYECTO
+
+La aplicación fue creada rápidamente para calcular ventas y descuentos.
+
+Pendientes conocidos:
+- Revisar validaciones.
+- Mejorar el manejo de configuración.
+- Definir una estrategia formal de control de versiones.
+- Automatizar pruebas y compilación.
+
+El equipo anterior compartía el proyecto mediante carpetas ZIP.

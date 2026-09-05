@@ -1,0 +1,13 @@
+{
+  "name": "techstore-devops",
+  "version": "1.0.0",
+  "description": "Proyecto inicial para práctica integradora DevOps",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/demo.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
