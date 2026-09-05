@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '24.x'
+    displayName: 'Preparar Node.js'
+
+  - script: npm ci
+    displayName: 'Instalar dependencias'
+
+  - script: npm test -- --ci --runInBand
+    displayName: 'Ejecutar pruebas automaticas'
+
+  - script: npm run build
+    displayName: 'Generar build en dist'
+
+  - script: npm run start:dist
+    displayName: 'Verificar ejecucion del build'
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/dist'
+      artifact: 'techstore-build'
+      publishLocation: 'pipeline'
+    displayName: 'Guardar build como artefacto'
