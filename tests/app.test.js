@@ -1,23 +1,48 @@
-const { calcularTotal, aplicarDescuento } = require('../src/app');
+const {
+    calcularTotal,
+    aplicarDescuento
+} = require('../src/app');
 
 test('calcula correctamente el total', () => {
     expect(calcularTotal(100, 2)).toBe(200);
 });
 
-test('aplica correctamente un descuento', () => {
-    expect(aplicarDescuento(1000, 10)).toBe(900);
+test('acepta cantidad cero', () => {
+    expect(calcularTotal(100, 0)).toBe(0);
 });
 
-test('rechaza precios negativos', () => {
-    expect(() => calcularTotal(-1, 2)).toThrow('precio');
-});
+test.each([-1, '100', NaN, Infinity])(
+    'rechaza precio inválido: %s',
+    (precio) => {
+        expect(() => calcularTotal(precio, 2)).toThrow();
+    }
+);
 
-test('rechaza cantidades no enteras o negativas', () => {
-    expect(() => calcularTotal(100, 1.5)).toThrow('cantidad');
-    expect(() => calcularTotal(100, -1)).toThrow('cantidad');
-});
+test.each([-1, 1.5, '2', NaN, Infinity])(
+    'rechaza cantidad inválida: %s',
+    (cantidad) => {
+        expect(() => calcularTotal(100, cantidad)).toThrow();
+    }
+);
 
-test('rechaza descuentos fuera del rango permitido', () => {
-    expect(() => aplicarDescuento(100, -1)).toThrow('descuento');
-    expect(() => aplicarDescuento(100, 101)).toThrow('descuento');
+test.each([-1, '100', NaN, Infinity])(
+    'rechaza total inválido: %s',
+    (total) => {
+        expect(() => aplicarDescuento(total, 10)).toThrow();
+    }
+);
+
+test.each([-1, 101, '10', NaN, Infinity])(
+    'rechaza descuento inválido: %s',
+    (porcentaje) => {
+        expect(() => aplicarDescuento(100, porcentaje)).toThrow();
+    }
+);
+
+test.each([
+    [0, 100],
+    [10, 90],
+    [100, 0]
+])('aplica descuento de %s por ciento', (porcentaje, esperado) => {
+    expect(aplicarDescuento(100, porcentaje)).toBe(esperado);
 });
